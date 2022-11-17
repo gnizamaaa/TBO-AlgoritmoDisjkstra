@@ -3,6 +3,7 @@
 
 #include "Aresta.h"
 
+/// NAO EH A INTENCAO UTILIZAR!!!!
 typedef struct listaAresta ListaAresta;
 
 ListaAresta *InicializaListaAresta(int tam);
