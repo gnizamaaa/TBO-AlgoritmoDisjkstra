@@ -5,14 +5,13 @@
 #ifndef SERVIDOR_H
 #define SERVIDOR_H
 
-
 typedef struct servidor Servidor;
 
 Servidor *IniciaServidor(int ID, int tamMapa);
 
-Vertice* GetVerticeMon(Servidor* mon);
+Vertice *GetVerticeServ(Servidor *mon);
 
-void InsereAresta(Servidor *alvo, Vertice *vertIns, double dist);
+void InsereArestaServ(Servidor *alvo, Vertice *vertIns, double dist);
 
 void LiberaServidor(Servidor *alvo);
 
