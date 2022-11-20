@@ -6,18 +6,15 @@
 struct monitor
 {
     Vertice *vert;
-    // Lista adjacentes
-    ListaVertice *adj;
     // Distancia para cada servidor
     Tabeladist *RTTServ;
 };
 
-Monitor *IniciaMonitor(int ID, int tamMapa)
+Monitor *IniciaMonitor(Vertice *vert, int qtdServ)
 {
     Monitor *saida = malloc(sizeof(Monitor));
-    saida->adj = inicializaListaVertice(tamMapa);
-    saida->vert = IniciaVertice(ID, tamMapa);
-    saida->RTTServ = IniciaTabela(tamMapa);
+    saida->vert = vert;
+    saida->RTTServ = IniciaTabela(qtdServ);
     return saida;
 }
 
@@ -27,16 +24,17 @@ Vertice *GetVerticeMon(Monitor *mon)
 }
 
 // Insere o vertice pego com o getVertice do obj a ser inserido
-void InsereAresta(Monitor *alvo, Vertice *vertIns, double dist)
+void InsereArestaMon(Monitor *alvo, Vertice *vertIns, double dist)
 {
-    insereListaVertice(alvo->adj, vertIns, dist);
+    // insereListaVertice(, vertIns, dist);
+    ConectaVertice(alvo->vert, vertIns, dist);
 }
 
 // Aplica Disjkstra nele - Talvez precise passar a lista com os todos os vertices
-void CalculaDistsMon_Serv(Monitor *mon, Servidor **vetServ, int tam);
+void CalculaDistsMon_Serv(Monitor *mon, Vertice **vetServ, int qtdServ, Vertice **todos, int total);
 
 // Busca na tabela
-double Dist_MonServ(Monitor *mon, Servidor *sev)
+double Dist_MonServ(Monitor *mon, Vertice *sev)
 {
     return GetDist(mon->RTTServ, sev);
 }
@@ -50,7 +48,6 @@ Tabeladist *getTabela_MonServ(Monitor *mon)
 void LiberaMonitor(Monitor *alvo)
 {
     LiberaTabela(alvo->RTTServ);
-    liberaLista(alvo->adj);
-    LiberaVertice(alvo->vert);
+    // LiberaVertice(alvo->vert);
     free(alvo);
 }

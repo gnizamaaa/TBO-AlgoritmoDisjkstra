@@ -28,7 +28,7 @@ int hashCode(Vertice *vert)
     return GetID(vert);
 }
 
-Tabeladist *IniciaTabelaServ(int tam)
+Tabeladist *IniciaTabela(int tam)
 {
     Tabeladist *saida = malloc(sizeof(Tabeladist));
     saida->MAX = tam;

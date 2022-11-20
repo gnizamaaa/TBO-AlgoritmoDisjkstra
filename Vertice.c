@@ -1,5 +1,7 @@
 #include "Vertice.h"
 #include "ListaVertice.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 struct vertice
 {

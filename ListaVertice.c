@@ -10,8 +10,10 @@ struct celula
     double custo;
 };
 
-int CompareCel(Celula *c1, Celula *c2)
+int CompareCel(const void *p1, const void *p2)
 {
+    const Celula *c1 = p1;
+    const Celula *c2 = p2;
     if ((c1->custo - c2->custo) > 0)
         return 1;
     else if ((c1->custo - c2->custo) < 0)
@@ -22,7 +24,7 @@ int CompareCel(Celula *c1, Celula *c2)
 
 struct listaVertice
 {
-    Celula **vet;
+    Celula *vet;
     int tam;
     int max;
 };
@@ -38,8 +40,8 @@ ListaVertice *inicializaListaVertice(int tam)
 
 void insereListaVertice(ListaVertice *list, Vertice *inserida, double custo)
 {
-    list->vet[list->tam]->obj = inserida;
-    list->vet[list->tam]->custo = custo;
+    list->vet[list->tam].obj = inserida;
+    list->vet[list->tam].custo = custo;
     list->tam++;
 }
 
@@ -53,7 +55,7 @@ Vertice *getVert(ListaVertice *list, Vertice *buscado)
     Vertice *saida = NULL;
     for (int i = 0; i < list->tam; i++)
     {
-        if (list->vet[i]->obj == buscado)
+        if (list->vet[i].obj == buscado)
         {
             saida = buscado;
             break;
@@ -65,7 +67,7 @@ Vertice *getVert(ListaVertice *list, Vertice *buscado)
 Vertice *getVertPos(ListaVertice *list, int Pos)
 {
     if (Pos < list->tam)
-        return list->vet[Pos]->obj;
+        return list->vet[Pos].obj;
 }
 
 double getCusto(ListaVertice *list, Vertice *buscado)
@@ -73,9 +75,9 @@ double getCusto(ListaVertice *list, Vertice *buscado)
     double saida = -1.0;
     for (int i = 0; i < list->tam; i++)
     {
-        if (list->vet[i]->obj == buscado)
+        if (list->vet[i].obj == buscado)
         {
-            saida = list->vet[i]->custo;
+            saida = list->vet[i].custo;
             break;
         }
     }
@@ -85,15 +87,15 @@ double getCusto(ListaVertice *list, Vertice *buscado)
 double getCustoPos(ListaVertice *list, int Pos)
 {
     if (Pos < list->tam)
-        return list->vet[Pos]->custo;
+        return list->vet[Pos].custo;
 }
 
 void liberaLista(ListaVertice *list)
 {
-    for (int i = 0; i < list->max; i++)
-    {
-        free(list->vet[i]);
-    }
+    // for (int i = 0; i < list->max; i++)
+    // {
+    //     free(list->vet[i]);
+    // }
     free(list->vet); // n sei se precisa desse
     free(list);
 }

@@ -11,6 +11,8 @@ int GetID(Vertice *v);
 
 int IsConnected(Vertice *orig, Vertice *dest);
 
+
+
 void LiberaVertice(Vertice *v);
 
 #endif

@@ -7,9 +7,11 @@
 
 typedef struct servidor Servidor;
 
-Servidor *IniciaServidor(int ID, int tamMapa);
+Servidor *IniciaServidor(Vertice *vert, int qtdServ);
 
-Vertice *GetVerticeServ(Servidor *mon);
+int GetIDServ(Servidor *ser);
+
+Vertice *GetVerticeServ(Servidor *ser);
 
 void InsereArestaServ(Servidor *alvo, Vertice *vertIns, double dist);
 

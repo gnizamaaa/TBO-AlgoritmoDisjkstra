@@ -7,23 +7,22 @@
 #ifndef MONITOR_H
 #define MONITOR_H
 
-
 typedef struct monitor Monitor;
 
-Monitor *IniciaMonitor(int ID, int tamMapa);
+Monitor *IniciaMonitor(Vertice *vert, int qtdServ);
 
-Vertice* GetVerticeMon(Monitor* mon);
+Vertice *GetVerticeMon(Monitor *mon);
 
-//Insere o vertice pego com o getVertice do obj a ser inserido
-void InsereAresta(Monitor *alvo, Vertice *vertIns, double dist);
+// Insere o vertice pego com o getVertice do obj a ser inserido
+void InsereArestaMon(Monitor *alvo, Vertice *vertIns, double dist);
 
-void CalculaDistsMon_Serv(Monitor* mon, Servidor**vetServ, int tam);
+void CalculaDistsMon_Serv(Monitor *mon, Vertice **vetServ, int qtdServ, Vertice **todos, int total);
 
-//Busca na tabela 
-double Dist_MonServ(Monitor* mon, Servidor*sev);
+// Busca na tabela
+double Dist_MonServ(Monitor *mon, Vertice *sev);
 
-//Retorna a tabela
-Tabeladist* getTabela_MonServ(Monitor* mon);
+// Retorna a tabela
+Tabeladist *getTabela_MonServ(Monitor *mon);
 
 void LiberaMonitor(Monitor *alvo);
 
