@@ -90,6 +90,7 @@ double getCustoPos(ListaVertice *list, int Pos)
         return list->vet[Pos].custo;
 }
 
+
 void liberaLista(ListaVertice *list)
 {
     // for (int i = 0; i < list->max; i++)
