@@ -16,13 +16,17 @@ Vertice *GetVerticeMon(Monitor *mon);
 // Insere o vertice pego com o getVertice do obj a ser inserido
 void InsereArestaMon(Monitor *alvo, Vertice *vertIns, double dist);
 
-void CalculaDistsMon_Serv(Monitor *mon, Vertice **vetServ, int qtdServ, Vertice **todos, int total);
+void CalculaDistsMon_Serv(Monitor *mon, Servidor **vetServ, int qtdServ, Vertice **todos, int total);
 
 // Busca na tabela
 double Dist_MonServ(Monitor *mon, Vertice *sev);
 
+double Dist_MonCli(Monitor *mon, Vertice *dest);
+
 // Retorna a tabela
 Tabeladist *getTabela_MonServ(Monitor *mon);
+Tabeladist *getTabela_MonCli(Monitor *mon);
+
 
 void LiberaMonitor(Monitor *alvo);
 

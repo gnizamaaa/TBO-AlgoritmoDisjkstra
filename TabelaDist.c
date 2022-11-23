@@ -33,7 +33,7 @@ Tabeladist *IniciaTabela(int tam)
     Tabeladist *saida = malloc(sizeof(Tabeladist));
     saida->MAX = tam;
     saida->tam = 0;
-    saida->vet = malloc(tam * sizeof(Set *));
+    saida->vet = malloc((tam) * sizeof(Set *));
 
     for (int i = 0; i < tam; i++)
     {
@@ -49,7 +49,7 @@ void InsereVert(Tabeladist *alvo, Vertice *vertIns, double dist)
         return;
 
     // get the hash
-    int hashIndex = hashCode(vertIns);
+    int hashIndex = hashCode(vertIns) % alvo->MAX;
 
     // move in array until an empty
     while (alvo->vet[hashIndex] != NULL)
@@ -66,6 +66,7 @@ void InsereVert(Tabeladist *alvo, Vertice *vertIns, double dist)
     inserido->dist = dist;
 
     alvo->vet[hashIndex] = inserido;
+    alvo->tam++;
 }
 
 double GetDist(Tabeladist *alvo, Vertice *vertBus)
@@ -73,8 +74,9 @@ double GetDist(Tabeladist *alvo, Vertice *vertBus)
     // get the hash
     int hashIndex = hashCode(vertBus);
 
+    int i = 0;
     // move in array until an empty
-    while (alvo->vet[hashIndex] != NULL)
+    while (alvo->vet[hashIndex] != NULL && i <= alvo->tam)
     {
 
         // Checa se eh o buscado
@@ -86,17 +88,47 @@ double GetDist(Tabeladist *alvo, Vertice *vertBus)
 
         // wrap around the table
         hashIndex %= alvo->MAX;
+        i++;
     }
 
     return -1;
+}
+
+void AtualizaDist(Tabeladist *alvo, Vertice *vertBus, double dist)
+{
+    // get the hash
+    int hashIndex = hashCode(vertBus);
+
+    int i = 0;
+    // move in array until an empty
+    while (alvo->vet[hashIndex] != NULL && i <= alvo->tam)
+    {
+
+        // Checa se eh o buscado
+        if (alvo->vet[hashIndex]->vert == vertBus)
+        {
+            alvo->vet[hashIndex]->dist = dist;
+            return;
+        }
+
+        // go to next cell
+        ++hashIndex;
+
+        // wrap around the table
+        hashIndex %= alvo->MAX;
+        i++;
+    }
 }
 
 void ImprimeTabela(Tabeladist *alvo)
 {
     for (int i = 0; i <= alvo->tam; i++)
     {
-        double temp = alvo->vet[i]->dist;
-        printf("%lf", temp);
+        if (alvo->vet[i])
+        {
+            double temp = alvo->vet[i]->dist;
+            printf("%i - %lf\n", GetID(alvo->vet[i]->vert), temp);
+        }
     }
 }
 

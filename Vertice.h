@@ -10,6 +10,13 @@ void ConectaVertice(Vertice *orig, Vertice *dest, double dist);
 
 int GetID(Vertice *v);
 
+void SetTipo(Vertice *v, char tipo);
+
+int IsCli(Vertice *v);
+int IsServ(Vertice *v);
+int IsMon(Vertice *v);
+
+
 int IsConnected(Vertice *orig, Vertice *dest);
 
 typedef struct pq PQ;

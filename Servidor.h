@@ -11,9 +11,11 @@ Servidor *IniciaServidor(Vertice *vert, int qtdServ);
 
 int GetIDServ(Servidor *ser);
 
+double DistIda(Servidor *ser, Vertice *dest);
+
 Vertice *GetVerticeServ(Servidor *ser);
 
-void InsereArestaServ(Servidor *alvo, Vertice *vertIns, double dist);
+void CalculaSaidaServ(Servidor *ser, Vertice **todos, int qtd);
 
 void LiberaServidor(Servidor *alvo);
 

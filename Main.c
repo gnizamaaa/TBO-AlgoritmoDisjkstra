@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
         total[i] = IniciaVertice(i, tamV);
     }
 
-    Vertice **servidores = malloc(sizeof(Vertice *) * tamS);
+    Servidor **servidores = malloc(sizeof(Vertice *) * tamS);
     Cliente **clientes = malloc(sizeof(Cliente *) * tamC);
     Monitor **monitores = malloc(sizeof(Monitor *) * tamM);
 
@@ -28,7 +28,9 @@ int main(int argc, char *argv[])
     {
         int temp;
         fscanf(arqEnt, "%i", &temp);
-        servidores[i] = total[temp];
+        // servidores[i] = total[temp];
+        servidores[i] = IniciaServidor(total[temp], tamV);
+        SetTipo(total[temp], 'S');
     }
 
     for (int i = 0; i < tamC; i++)
@@ -36,6 +38,7 @@ int main(int argc, char *argv[])
         int temp;
         fscanf(arqEnt, "%i", &temp);
         clientes[i] = IniciaCliente(total[temp], tamS);
+        SetTipo(total[temp], 'C');
     }
 
     for (int i = 0; i < tamM; i++)
@@ -43,6 +46,7 @@ int main(int argc, char *argv[])
         int temp;
         fscanf(arqEnt, "%i", &temp);
         monitores[i] = IniciaMonitor(total[temp], tamS);
+        SetTipo(total[temp], 'M');
     }
 
     for (int i = 0; i < tamE; i++)
@@ -53,17 +57,25 @@ int main(int argc, char *argv[])
         ConectaVertice(total[orig], total[dest], dist);
     }
 
-    // for (int i = 0; i < tamM; i++)
-    // {
-    //     CalculaDistsMon_Serv(monitores[i], servidores, tamS, total, tamV);
-    // }
+    for (int i = 0; i < tamS; i++)
+    {
+        CalculaSaidaServ(servidores[0], total, tamV);
+    }
 
-    CalculaDistsMon_Serv(monitores[0], servidores, tamS, total, tamV);
+    for (int i = 0; i < tamM; i++)
+    {
+        CalculaDistsMon_Serv(monitores[i], servidores, tamS, total, tamV);
+    }
 
-    printf("%i - %i\n", GetID(GetVerticeMon(monitores[0])), GetID(servidores[0]));
+    printf("%i - %i\n", GetID(GetVerticeMon(monitores[0])), GetID(GetVerticeServ(servidores[0])));
     ImprimeTabela(getTabela_MonServ(monitores[0]));
-    double teste = GetDist(getTabela_MonServ(monitores[0]), servidores[0]);
-    printf("Teste %lf", teste);
+    ImprimeTabela(getTabela_MonCli(monitores[0]));
+
+    printf("\n%i - %i\n", GetID(GetVerticeCli(clientes[0])), GetID(GetVerticeServ(servidores[0])));
+    CalculaDistsCli_Serv(clientes[0], servidores, tamS, monitores, tamM, total, tamV);
+    ImprimeTabela(getTabela_RTTReal(clientes[0]));
+    printf("\n");
+    ImprimeTabela(getTabela_RTTFake(clientes[0]));
 
     // Liberando a memoria alocada
     for (int i = 0; i < tamC; i++)

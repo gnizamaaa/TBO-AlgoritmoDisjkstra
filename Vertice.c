@@ -7,6 +7,7 @@ struct vertice
 {
     int id;
     ListaVertice *saidas;
+    char tipo; // M=mon, C=cliente, S=servidor
 };
 
 Vertice *IniciaVertice(int ID, int tamMapa)
@@ -25,6 +26,24 @@ void ConectaVertice(Vertice *orig, Vertice *dest, double dist)
 int GetID(Vertice *v)
 {
     return v->id;
+}
+
+void SetTipo(Vertice *v, char tipo)
+{
+    v->tipo = tipo;
+}
+
+int IsCli(Vertice *v)
+{
+    return v->tipo == 'C';
+}
+int IsServ(Vertice *v)
+{
+    return v->tipo == 'S';
+}
+int IsMon(Vertice *v)
+{
+    return v->tipo == 'M';
 }
 
 int IsConnected(Vertice *orig, Vertice *dest)

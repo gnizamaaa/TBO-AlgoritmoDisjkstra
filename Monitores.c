@@ -7,8 +7,10 @@
 struct monitor
 {
     Vertice *vert;
-    // Distancia para cada servidor
+    // RTT para cada servidor
     Tabeladist *RTTServ;
+    // Distancia para cada cliente
+    Tabeladist *SaidaCli;
 };
 
 Monitor *IniciaMonitor(Vertice *vert, int qtdServ)
@@ -16,6 +18,8 @@ Monitor *IniciaMonitor(Vertice *vert, int qtdServ)
     Monitor *saida = malloc(sizeof(Monitor));
     saida->vert = vert;
     saida->RTTServ = IniciaTabela(qtdServ);
+    // TODO: MUDA AQ
+    saida->SaidaCli = IniciaTabela(qtdServ);
     return saida;
 }
 
@@ -31,7 +35,7 @@ void InsereArestaMon(Monitor *alvo, Vertice *vertIns, double dist)
     ConectaVertice(alvo->vert, vertIns, dist);
 }
 
-void Atualizafila(Vertice *vert, double custo, PQ *fila, double custoVertAtual)
+static void Atualizafila(Vertice *vert, double custo, PQ *fila, double custoVertAtual)
 {
     if (PQ_get_key(fila, GetID(vert)) > custo + custoVertAtual)
     {
@@ -39,18 +43,8 @@ void Atualizafila(Vertice *vert, double custo, PQ *fila, double custoVertAtual)
     }
 }
 
-int IsServ(Vertice **vetServ, int qtdServ, Vertice *removido)
-{
-    for (int i = 0; i < qtdServ; i++)
-    {
-        if (vetServ[i] == removido)
-            return 1;
-    }
-    return 0;
-}
-
 // Aplica Disjkstra nele - Talvez precise passar a lista com os todos os vertices
-void CalculaDistsMon_Serv(Monitor *mon, Vertice **vetServ, int qtdServ, Vertice **todos, int total)
+void CalculaDistsMon_Serv(Monitor *mon, Servidor **vetServ, int qtdServ, Vertice **todos, int total)
 {
     PQ *fila = PQ_init(total);
     for (int i = 0; i < total; i++)
@@ -68,8 +62,23 @@ void CalculaDistsMon_Serv(Monitor *mon, Vertice **vetServ, int qtdServ, Vertice 
         Vertice *removido = PQ_delmin(fila);
         IteraAdj(removido, fila, custo, Atualizafila);
         // Se eh um servidor, insere na tabela o custo
-        if (IsServ(vetServ, qtdServ, removido))
-            InsereVert(mon->RTTServ, removido, custo);
+        if (IsServ(removido))
+        {
+            Servidor *dest = NULL;
+            for (int i = 0; i < qtdServ; i++)
+            {
+                if (GetVerticeServ(vetServ[i]) == removido)
+                {
+                    dest = vetServ[i];
+                    break;
+                }
+            }
+            InsereVert(mon->RTTServ, removido, custo + DistIda(dest, mon->vert));
+        }
+        else if (IsCli(removido))
+        {
+            InsereVert(mon->SaidaCli, removido, custo);
+        }
     }
     PQ_finish(fila);
 }
@@ -80,10 +89,20 @@ double Dist_MonServ(Monitor *mon, Vertice *sev)
     return GetDist(mon->RTTServ, sev);
 }
 
+double Dist_MonCli(Monitor *mon, Vertice *dest)
+{
+    return GetDist(mon->SaidaCli, dest);
+}
+
 // Retorna a tabela
 Tabeladist *getTabela_MonServ(Monitor *mon)
 {
     return mon->RTTServ;
+}
+
+Tabeladist *getTabela_MonCli(Monitor *mon)
+{
+    return mon->SaidaCli;
 }
 
 void LiberaMonitor(Monitor *alvo)
