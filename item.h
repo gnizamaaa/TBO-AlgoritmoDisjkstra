@@ -1,10 +1,11 @@
+#include "Vertice.h"
+
 #ifndef ITEM_H
 #define ITEM_H
-#include "Vertice.h"
 
 typedef struct
 {
-  Vertice *vert; // identificador do nó
+  Vertice* vert; // identificador do nó
   double value;  // valor associado ao nó
 } Item;
 

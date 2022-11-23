@@ -10,8 +10,6 @@ struct pq
     int N;
 };
 
-typedef struct pq PQ;
-
 static void swap(PQ *base, int i, int j)
 {
     exch(base->vet[i], base->vet[j]);
@@ -58,9 +56,9 @@ PQ *PQ_init(int maxN)
 void PQ_insert(PQ *base, Vertice *vert, double dist)
 {
     base->N++;
-    base->vet[base->N].vert = vert;
     base->vet[base->N].value = dist;
-    base->map[id(base->vet[base->N])] = base->N;
+    base->vet[base->N].vert = vert;
+    base->map[GetID(vert)] = base->N;
     fix_up(base, base->vet, base->N);
 }
 

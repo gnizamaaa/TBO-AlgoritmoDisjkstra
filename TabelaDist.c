@@ -91,6 +91,15 @@ double GetDist(Tabeladist *alvo, Vertice *vertBus)
     return -1;
 }
 
+void ImprimeTabela(Tabeladist *alvo)
+{
+    for (int i = 0; i <= alvo->tam; i++)
+    {
+        double temp = alvo->vet[i]->dist;
+        printf("%lf", temp);
+    }
+}
+
 void LiberaTabela(Tabeladist *alvo)
 {
     for (int i = 0; i < alvo->MAX; i++)

@@ -1,5 +1,6 @@
 #ifndef VERTICE_H
 #define VERTICE_H
+//#include "PQ.h"
 
 typedef struct vertice Vertice;
 
@@ -11,7 +12,8 @@ int GetID(Vertice *v);
 
 int IsConnected(Vertice *orig, Vertice *dest);
 
-
+typedef struct pq PQ;
+void IteraAdj(Vertice *vert, PQ *fila, double custoVertAtual, void func(Vertice *vert, double custo, PQ *fila, double custoVertAtual));
 
 void LiberaVertice(Vertice *v);
 

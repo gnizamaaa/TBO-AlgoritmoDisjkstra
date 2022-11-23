@@ -9,8 +9,6 @@ struct vertice
     ListaVertice *saidas;
 };
 
-typedef struct vertice Vertice;
-
 Vertice *IniciaVertice(int ID, int tamMapa)
 {
     Vertice *saida = malloc(sizeof(Vertice));
@@ -37,6 +35,11 @@ int IsConnected(Vertice *orig, Vertice *dest)
     }
     else
         return 0;
+}
+
+void IteraAdj(Vertice *vert, PQ *fila, double custoVertAtual, void func(Vertice *vert, double custo, PQ *fila, double custoVertAtual))
+{
+    IteraLista(vert->saidas, fila, custoVertAtual, func);
 }
 
 void LiberaVertice(Vertice *v)

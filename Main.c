@@ -48,8 +48,8 @@ int main(int argc, char *argv[])
     for (int i = 0; i < tamE; i++)
     {
         int orig, dest;
-        double dist;
-        fscanf(arqEnt, "%i %i %f", &orig, &dest, &dist);
+        double dist = 0;
+        fscanf(arqEnt, "%i %i %lf", &orig, &dest, &dist);
         ConectaVertice(total[orig], total[dest], dist);
     }
 
@@ -58,17 +58,12 @@ int main(int argc, char *argv[])
     //     CalculaDistsMon_Serv(monitores[i], servidores, tamS, total, tamV);
     // }
 
-    for (int i = 0; i < tamV; i++)
-    {
-        printf("%i\n", GetID(total[i]));
-        for (int j = 0; j < tamV; j++)
-        {
-            if (IsConnected(total[i], total[j]))
-            {
-                printf("%i %i\n", GetID(total[i]), GetID(total[j]));
-            }
-        }
-    }
+    CalculaDistsMon_Serv(monitores[0], servidores, tamS, total, tamV);
+
+    printf("%i - %i\n", GetID(GetVerticeMon(monitores[0])), GetID(servidores[0]));
+    ImprimeTabela(getTabela_MonServ(monitores[0]));
+    double teste = GetDist(getTabela_MonServ(monitores[0]), servidores[0]);
+    printf("Teste %lf", teste);
 
     // Liberando a memoria alocada
     for (int i = 0; i < tamC; i++)

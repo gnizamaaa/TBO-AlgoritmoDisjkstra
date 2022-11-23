@@ -90,6 +90,13 @@ double getCustoPos(ListaVertice *list, int Pos)
         return list->vet[Pos].custo;
 }
 
+void IteraLista(ListaVertice *list, PQ *fila, double custoVertAtualvoid, void func(Vertice *vert, double custo, PQ *fila, double custoVertAtual))
+{
+    for (int i = 0; i < list->tam; i++)
+    {
+        func(list->vet[i].obj, list->vet[i].custo, fila, custoVertAtualvoid);
+    }
+}
 
 void liberaLista(ListaVertice *list)
 {
