@@ -3,18 +3,16 @@
 #include "Servidor.h"
 #include "PQ.h"
 
-// TODO: Implementar o servidor!
-// ANALISAR NECESSIDADE
 struct servidor
 {
     Vertice *vert;
     Tabeladist *DistIda;
 };
 
-Servidor *IniciaServidor(Vertice *vert, int qtdServ)
+Servidor *IniciaServidor(Vertice *vert, int tamTotal)
 {
     Servidor *saida = malloc(sizeof(Servidor));
-    saida->DistIda = IniciaTabela(qtdServ);
+    saida->DistIda = IniciaTabela(tamTotal);
     saida->vert = vert;
     return saida;
 }
@@ -62,6 +60,9 @@ void CalculaSaidaServ(Servidor *ser, Vertice **todos, int qtd)
         InsereVert(ser->DistIda, removido, custo);
     }
     PQ_finish(fila);
+
+    printf("\nServidor \n");
+    ImprimeTabela(ser->DistIda);
 }
 
 void LiberaServidor(Servidor *alvo)

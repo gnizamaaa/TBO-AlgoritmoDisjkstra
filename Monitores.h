@@ -9,7 +9,7 @@
 
 typedef struct monitor Monitor;
 
-Monitor *IniciaMonitor(Vertice *vert, int qtdServ);
+Monitor *IniciaMonitor(Vertice *vert, int qtdServ, int qtdCli);
 
 Vertice *GetVerticeMon(Monitor *mon);
 

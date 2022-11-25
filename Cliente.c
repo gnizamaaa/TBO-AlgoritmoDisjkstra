@@ -114,17 +114,28 @@ void CalculaDistsCli_Serv(Cliente *cli, Servidor **vetServ, int qtdServ, Monitor
         if (menorDist != -1)
             InsereVert(cli->RTTFake, GetVerticeServ(vetServ[j]), menorDist);
     }
+
+    LiberaTabela(RTTMon);
 }
 
 // Retorna a tabela
-Tabeladist *getTabela_RTTReal(Cliente *mon)
+Tabeladist *getTabela_RTTReal(Cliente *cli)
 {
-    return mon->RTTReal;
+    return cli->RTTReal;
 }
 
-Tabeladist *getTabela_RTTFake(Cliente *mon)
+Tabeladist *getTabela_RTTFake(Cliente *cli)
 {
-    return mon->RTTFake;
+    return cli->RTTFake;
+}
+
+double getRTTReal(Cliente *cli, Vertice *buscado)
+{
+    return GetDist(cli->RTTReal, buscado);
+}
+double getRTTFake(Cliente *cli, Vertice *buscado)
+{
+    return GetDist(cli->RTTFake, buscado);
 }
 
 void LiberaCliente(Cliente *alvo)

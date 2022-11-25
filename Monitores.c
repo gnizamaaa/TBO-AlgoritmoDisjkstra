@@ -13,13 +13,12 @@ struct monitor
     Tabeladist *SaidaCli;
 };
 
-Monitor *IniciaMonitor(Vertice *vert, int qtdServ)
+Monitor *IniciaMonitor(Vertice *vert, int qtdServ, int qtdCli)
 {
     Monitor *saida = malloc(sizeof(Monitor));
     saida->vert = vert;
     saida->RTTServ = IniciaTabela(qtdServ);
-    // TODO: MUDA AQ
-    saida->SaidaCli = IniciaTabela(qtdServ);
+    saida->SaidaCli = IniciaTabela(qtdCli);
     return saida;
 }
 
@@ -81,6 +80,9 @@ void CalculaDistsMon_Serv(Monitor *mon, Servidor **vetServ, int qtdServ, Vertice
         }
     }
     PQ_finish(fila);
+
+    printf("\nMonitor\n");
+    ImprimeTabela(mon->RTTServ);
 }
 
 // Busca na tabela
@@ -108,6 +110,7 @@ Tabeladist *getTabela_MonCli(Monitor *mon)
 void LiberaMonitor(Monitor *alvo)
 {
     LiberaTabela(alvo->RTTServ);
+    LiberaTabela(alvo->SaidaCli);
     // LiberaVertice(alvo->vert);
     free(alvo);
 }

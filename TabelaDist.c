@@ -67,6 +67,7 @@ void InsereVert(Tabeladist *alvo, Vertice *vertIns, double dist)
 
     alvo->vet[hashIndex] = inserido;
     alvo->tam++;
+    return;
 }
 
 double GetDist(Tabeladist *alvo, Vertice *vertBus)
@@ -76,7 +77,7 @@ double GetDist(Tabeladist *alvo, Vertice *vertBus)
 
     int i = 0;
     // move in array until an empty
-    while (alvo->vet[hashIndex] != NULL && i <= alvo->tam)
+    while (alvo->vet[hashIndex] != NULL && i < alvo->tam)
     {
 
         // Checa se eh o buscado
@@ -101,7 +102,7 @@ void AtualizaDist(Tabeladist *alvo, Vertice *vertBus, double dist)
 
     int i = 0;
     // move in array until an empty
-    while (alvo->vet[hashIndex] != NULL && i <= alvo->tam)
+    while (alvo->vet[hashIndex] != NULL && i < alvo->tam)
     {
 
         // Checa se eh o buscado
@@ -122,9 +123,9 @@ void AtualizaDist(Tabeladist *alvo, Vertice *vertBus, double dist)
 
 void ImprimeTabela(Tabeladist *alvo)
 {
-    for (int i = 0; i <= alvo->tam; i++)
+    for (int i = 0; i < alvo->tam; i++)
     {
-        if (alvo->vet[i])
+        if (alvo->vet[i] != NULL)
         {
             double temp = alvo->vet[i]->dist;
             printf("%i - %lf\n", GetID(alvo->vet[i]->vert), temp);

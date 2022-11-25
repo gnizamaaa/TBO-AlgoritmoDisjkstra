@@ -21,8 +21,11 @@ void InsereAresta(Cliente *alvo, Vertice *vertIns, double dist);
 void CalculaDistsCli_Serv(Cliente *cli, Servidor **vetServ, int qtdServ, Monitor **vetMon, int qtdMon, Vertice **todos, int total);
 
 // Retorna a tabela
-Tabeladist *getTabela_RTTReal(Cliente *mon);
-Tabeladist *getTabela_RTTFake(Cliente *mon);
+Tabeladist *getTabela_RTTReal(Cliente *cli);
+Tabeladist *getTabela_RTTFake(Cliente *cli);
+
+double getRTTReal(Cliente *cli, Vertice *buscado);
+double getRTTFake(Cliente *cli, Vertice *buscado);
 
 void LiberaCliente(Cliente *alvo);
 

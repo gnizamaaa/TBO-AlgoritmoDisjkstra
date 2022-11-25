@@ -2,6 +2,7 @@
 #include "Vertice.h"
 #include "Servidor.h"
 #include "Monitores.h"
+#include "Saida.h"
 
 int main(int argc, char *argv[])
 {
@@ -29,7 +30,7 @@ int main(int argc, char *argv[])
         int temp;
         fscanf(arqEnt, "%i", &temp);
         // servidores[i] = total[temp];
-        servidores[i] = IniciaServidor(total[temp], tamV);
+        servidores[i] = IniciaServidor(total[temp], tamV+7);
         SetTipo(total[temp], 'S');
     }
 
@@ -37,7 +38,7 @@ int main(int argc, char *argv[])
     {
         int temp;
         fscanf(arqEnt, "%i", &temp);
-        clientes[i] = IniciaCliente(total[temp], tamS);
+        clientes[i] = IniciaCliente(total[temp], tamV+7);
         SetTipo(total[temp], 'C');
     }
 
@@ -45,7 +46,7 @@ int main(int argc, char *argv[])
     {
         int temp;
         fscanf(arqEnt, "%i", &temp);
-        monitores[i] = IniciaMonitor(total[temp], tamS);
+        monitores[i] = IniciaMonitor(total[temp], tamV, tamV+7);
         SetTipo(total[temp], 'M');
     }
 
@@ -57,9 +58,10 @@ int main(int argc, char *argv[])
         ConectaVertice(total[orig], total[dest], dist);
     }
 
+    // Processamento
     for (int i = 0; i < tamS; i++)
     {
-        CalculaSaidaServ(servidores[0], total, tamV);
+        CalculaSaidaServ(servidores[i], total, tamV);
     }
 
     for (int i = 0; i < tamM; i++)
@@ -67,15 +69,25 @@ int main(int argc, char *argv[])
         CalculaDistsMon_Serv(monitores[i], servidores, tamS, total, tamV);
     }
 
-    printf("%i - %i\n", GetID(GetVerticeMon(monitores[0])), GetID(GetVerticeServ(servidores[0])));
-    ImprimeTabela(getTabela_MonServ(monitores[0]));
-    ImprimeTabela(getTabela_MonCli(monitores[0]));
+    for (int i = 0; i < tamC; i++)
+    {
+        CalculaDistsCli_Serv(clientes[i], servidores, tamS, monitores, tamM, total, tamV);
+    }
 
-    printf("\n%i - %i\n", GetID(GetVerticeCli(clientes[0])), GetID(GetVerticeServ(servidores[0])));
-    CalculaDistsCli_Serv(clientes[0], servidores, tamS, monitores, tamM, total, tamV);
-    ImprimeTabela(getTabela_RTTReal(clientes[0]));
-    printf("\n");
-    ImprimeTabela(getTabela_RTTFake(clientes[0]));
+    // printf("%i - %i\n", GetID(GetVerticeMon(monitores[0])), GetID(GetVerticeServ(servidores[0])));
+    // ImprimeTabela(getTabela_MonServ(monitores[0]));
+    // ImprimeTabela(getTabela_MonCli(monitores[0]));
+
+    // printf("\n%i - %i\n", GetID(GetVerticeMon(monitores[1])), GetID(GetVerticeServ(servidores[0])));
+    // ImprimeTabela(getTabela_MonServ(monitores[1]));
+    // ImprimeTabela(getTabela_MonCli(monitores[1]));
+
+    // printf("\n%i - %i\n", GetID(GetVerticeCli(clientes[0])), GetID(GetVerticeServ(servidores[0])));
+    // ImprimeTabela(getTabela_RTTReal(clientes[0]));
+    // printf("oi\n");
+    // ImprimeTabela(getTabela_RTTFake(clientes[0]));
+
+    // ImprimeSaida(clientes, tamC, servidores, tamS);
 
     // Liberando a memoria alocada
     for (int i = 0; i < tamC; i++)
@@ -90,12 +102,17 @@ int main(int argc, char *argv[])
     }
     free(monitores);
 
+    for (int i = 0; i < tamS; i++)
+    {
+        LiberaServidor(servidores[i]);
+    }
+    free(servidores);
+
     for (int i = 0; i < tamV; i++)
     {
         LiberaVertice(total[i]);
     }
     free(total);
-    free(servidores);
 
     fclose(arqEnt);
 }

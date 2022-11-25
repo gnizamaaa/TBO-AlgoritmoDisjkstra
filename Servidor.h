@@ -7,7 +7,7 @@
 
 typedef struct servidor Servidor;
 
-Servidor *IniciaServidor(Vertice *vert, int qtdServ);
+Servidor *IniciaServidor(Vertice *vert, int tamTotal);
 
 int GetIDServ(Servidor *ser);
 
