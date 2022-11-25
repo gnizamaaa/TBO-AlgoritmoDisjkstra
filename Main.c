@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
     // printf("oi\n");
     // ImprimeTabela(getTabela_RTTFake(clientes[0]));
 
-    // ImprimeSaida(clientes, tamC, servidores, tamS);
+    ImprimeSaida(clientes, tamC, servidores, tamS);
 
     // Liberando a memoria alocada
     for (int i = 0; i < tamC; i++)

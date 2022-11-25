@@ -72,7 +72,7 @@ void CalculaDistsMon_Serv(Monitor *mon, Servidor **vetServ, int qtdServ, Vertice
                     break;
                 }
             }
-            InsereVert(mon->RTTServ, removido, custo + DistIda(dest, mon->vert));
+            InsereVert(mon->RTTServ, removido, (custo + DistIda(dest, mon->vert)));
         }
         else if (IsCli(removido))
         {
@@ -81,8 +81,10 @@ void CalculaDistsMon_Serv(Monitor *mon, Servidor **vetServ, int qtdServ, Vertice
     }
     PQ_finish(fila);
 
-    printf("\nMonitor\n");
+    printf("\nMonitor - Serv\n");
     ImprimeTabela(mon->RTTServ);
+    printf("\nMonitor - Cli\n");
+    ImprimeTabela(mon->SaidaCli);
 }
 
 // Busca na tabela

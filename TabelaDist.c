@@ -75,9 +75,8 @@ double GetDist(Tabeladist *alvo, Vertice *vertBus)
     // get the hash
     int hashIndex = hashCode(vertBus);
 
-    int i = 0;
     // move in array until an empty
-    while (alvo->vet[hashIndex] != NULL && i < alvo->tam)
+    while (alvo->vet[hashIndex] != NULL)
     {
 
         // Checa se eh o buscado
@@ -89,7 +88,6 @@ double GetDist(Tabeladist *alvo, Vertice *vertBus)
 
         // wrap around the table
         hashIndex %= alvo->MAX;
-        i++;
     }
 
     return -1;
@@ -123,7 +121,7 @@ void AtualizaDist(Tabeladist *alvo, Vertice *vertBus, double dist)
 
 void ImprimeTabela(Tabeladist *alvo)
 {
-    for (int i = 0; i < alvo->tam; i++)
+    for (int i = 0; i < alvo->MAX; i++)
     {
         if (alvo->vet[i] != NULL)
         {
