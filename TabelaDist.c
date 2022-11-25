@@ -73,7 +73,7 @@ void InsereVert(Tabeladist *alvo, Vertice *vertIns, double dist)
 double GetDist(Tabeladist *alvo, Vertice *vertBus)
 {
     // get the hash
-    int hashIndex = hashCode(vertBus);
+    int hashIndex = hashCode(vertBus)%alvo->MAX;
 
     // move in array until an empty
     while (alvo->vet[hashIndex] != NULL)

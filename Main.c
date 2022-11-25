@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
         int temp;
         fscanf(arqEnt, "%i", &temp);
         // servidores[i] = total[temp];
-        servidores[i] = IniciaServidor(total[temp], tamV+7);
+        servidores[i] = IniciaServidor(total[temp], tamV);
         SetTipo(total[temp], 'S');
     }
 
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     {
         int temp;
         fscanf(arqEnt, "%i", &temp);
-        clientes[i] = IniciaCliente(total[temp], tamV+7);
+        clientes[i] = IniciaCliente(total[temp], tamS);
         SetTipo(total[temp], 'C');
     }
 
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     {
         int temp;
         fscanf(arqEnt, "%i", &temp);
-        monitores[i] = IniciaMonitor(total[temp], tamV, tamV+7);
+        monitores[i] = IniciaMonitor(total[temp], tamS, tamC);
         SetTipo(total[temp], 'M');
     }
 

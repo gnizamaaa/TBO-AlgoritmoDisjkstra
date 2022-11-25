@@ -81,10 +81,10 @@ void CalculaDistsMon_Serv(Monitor *mon, Servidor **vetServ, int qtdServ, Vertice
     }
     PQ_finish(fila);
 
-    printf("\nMonitor - Serv\n");
-    ImprimeTabela(mon->RTTServ);
-    printf("\nMonitor - Cli\n");
-    ImprimeTabela(mon->SaidaCli);
+    // printf("\nMonitor - Serv\n");
+    // ImprimeTabela(mon->RTTServ);
+    // printf("\nMonitor - Cli\n");
+    // ImprimeTabela(mon->SaidaCli);
 }
 
 // Busca na tabela

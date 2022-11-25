@@ -61,8 +61,8 @@ void CalculaSaidaServ(Servidor *ser, Vertice **todos, int qtd)
     }
     PQ_finish(fila);
 
-    printf("\nServidor \n");
-    ImprimeTabela(ser->DistIda);
+    // printf("\nServidor \n");
+    // ImprimeTabela(ser->DistIda);
 }
 
 void LiberaServidor(Servidor *alvo)
