@@ -9,21 +9,31 @@ struct set
     double dist;
 };
 
-// Tabela vertice-custo
+/**
+ * @brief Tabela vertice-custo
 //  Implementar com alguma forma de otimizacao para n precisar busca O(n)
 //  Pode usar o id como chave de busca mas tem q colocar %tam
 //  colocar lista dessa celula(vert-custo) em cada pos consequentmente
 //  Ai qnd for buscar, vem e busca dentro dessa lista
-typedef struct table Tabeladist;
+ *
+ */
+typedef struct tabela Tabeladist;
 
-struct table
+struct tabela
 {
     Set **vet;
     int tam;
     int MAX;
 };
 
-int hashCode(Vertice *vert)
+/**
+ * @brief Foi decidida organizar a tabela de modo similar a uma HashTable,
+ * utilizando dessa função para obter um valor unico para o vertice a ser inserido
+ *
+ * @param vert
+ * @return int
+ */
+static int hashCode(Vertice *vert)
 {
     return GetID(vert);
 }
@@ -45,49 +55,48 @@ Tabeladist *IniciaTabela(int tam)
 
 void InsereVert(Tabeladist *alvo, Vertice *vertIns, double dist)
 {
+    // Checa se nao esta cheia
     if (alvo->tam >= alvo->MAX)
         return;
 
-    // get the hash
-    int hashIndex = hashCode(vertIns) % alvo->MAX;
+    int indice = hashCode(vertIns) % alvo->MAX;
 
-    // move in array until an empty
-    while (alvo->vet[hashIndex] != NULL)
+    // Move no array ate achar uma pos vazia
+    while (alvo->vet[indice] != NULL)
     {
-        // go to next cell
-        ++hashIndex;
-
-        // wrap around the table
-        hashIndex %= alvo->MAX;
+        // Avança uma pos
+        ++indice;
+        indice %= alvo->MAX;
     }
 
+    // Cria um novo set/celula para ser inserido com a informacao
     Set *inserido = malloc(sizeof(Set));
     inserido->vert = vertIns;
     inserido->dist = dist;
 
-    alvo->vet[hashIndex] = inserido;
+    // Insere de fato no vetor
+    alvo->vet[indice] = inserido;
     alvo->tam++;
     return;
 }
 
 double GetDist(Tabeladist *alvo, Vertice *vertBus)
 {
-    // get the hash
-    int hashIndex = hashCode(vertBus)%alvo->MAX;
+    int Indice = hashCode(vertBus) % alvo->MAX;
 
-    // move in array until an empty
-    while (alvo->vet[hashIndex] != NULL)
+    int i = 0;
+    // Move no array ate achar uma pos vazia (percorre o vetor)
+    while (alvo->vet[Indice] != NULL && i < alvo->tam)
     {
 
         // Checa se eh o buscado
-        if (alvo->vet[hashIndex]->vert == vertBus)
-            return alvo->vet[hashIndex]->dist;
+        if (alvo->vet[Indice]->vert == vertBus)
+            return alvo->vet[Indice]->dist;
 
-        // go to next cell
-        ++hashIndex;
-
-        // wrap around the table
-        hashIndex %= alvo->MAX;
+        // Avança uma pos
+        ++Indice;
+        Indice %= alvo->MAX;
+        i++;
     }
 
     return -1;
@@ -95,26 +104,23 @@ double GetDist(Tabeladist *alvo, Vertice *vertBus)
 
 void AtualizaDist(Tabeladist *alvo, Vertice *vertBus, double dist)
 {
-    // get the hash
-    int hashIndex = hashCode(vertBus);
+    int indice = hashCode(vertBus);
 
     int i = 0;
-    // move in array until an empty
-    while (alvo->vet[hashIndex] != NULL && i < alvo->tam)
+    // Move no array ate achar uma pos vazia (percorre o vetor)
+    while (alvo->vet[indice] != NULL && i < alvo->tam)
     {
 
         // Checa se eh o buscado
-        if (alvo->vet[hashIndex]->vert == vertBus)
+        if (alvo->vet[indice]->vert == vertBus)
         {
-            alvo->vet[hashIndex]->dist = dist;
+            alvo->vet[indice]->dist = dist;
             return;
         }
 
-        // go to next cell
-        ++hashIndex;
-
-        // wrap around the table
-        hashIndex %= alvo->MAX;
+        // Avança uma pos
+        ++indice;
+        indice %= alvo->MAX;
         i++;
     }
 }

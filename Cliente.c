@@ -36,7 +36,16 @@ void InsereAresta(Cliente *alvo, Vertice *vertIns, double dist)
     ConectaVertice(alvo->vert, vertIns, dist);
 }
 
-void Atualizafila1(Vertice *vert, double custo, PQ *fila, double custoVertAtual)
+/**
+ * @brief Atualiza a Priority Queue com os valores (possivelmente menores)
+ * de custo obtidos através dos vertices adjacentes ao retirado da fila
+ *
+ * @param vert
+ * @param custo
+ * @param fila
+ * @param custoVertAtual
+ */
+static void Atualizafila(Vertice *vert, double custo, PQ *fila, double custoVertAtual)
 {
     if (PQ_get_key(fila, GetID(vert)) > custo + custoVertAtual)
     {
@@ -62,7 +71,7 @@ void CalculaDistsCli_Serv(Cliente *cli, Servidor **vetServ, int qtdServ, Monitor
         // Pega a menor chave, remove da fila e atualiza a fila
         double custo = PQ_get_key(fila, GetID(PQ_min(fila)));
         Vertice *removido = PQ_delmin(fila);
-        IteraAdj(removido, fila, custo, Atualizafila1);
+        IteraAdj(removido, fila, custo, Atualizafila);
         // Se eh um servidor, insere na tabela o custo
         if (IsServ(removido))
         {
@@ -88,17 +97,12 @@ void CalculaDistsCli_Serv(Cliente *cli, Servidor **vetServ, int qtdServ, Monitor
                     break;
                 }
             }
-            // Iso daq retornou -1
             InsereVert(RTTMon, removido, custo + Dist_MonCli(temp, cli->vert));
         }
     }
     PQ_finish(fila);
 
-    // printf("\nRTTMON\n");
-    // ImprimeTabela(RTTMon);
-    // printf("\n");
-
-    // Tabela das feiki
+    // Tabela das mais falsas do RJ
     for (int j = 0; j < qtdServ; j++)
     {
         double menorDist = -1;

@@ -12,6 +12,9 @@ int main(int argc, char *argv[])
     FILE *arqEnt = fopen(entrada, "r");
     int tamV, tamE, tamS, tamC, tamM;
 
+
+    //***************** Leitura do arquivo de entrada
+
     fscanf(arqEnt, "%i %i", &tamV, &tamE);
     fscanf(arqEnt, "%i %i %i", &tamS, &tamC, &tamM);
 
@@ -25,15 +28,16 @@ int main(int argc, char *argv[])
     Cliente **clientes = malloc(sizeof(Cliente *) * tamC);
     Monitor **monitores = malloc(sizeof(Monitor *) * tamM);
 
+    //Leitura de servidores
     for (int i = 0; i < tamS; i++)
     {
         int temp;
         fscanf(arqEnt, "%i", &temp);
-        // servidores[i] = total[temp];
         servidores[i] = IniciaServidor(total[temp], tamV);
         SetTipo(total[temp], 'S');
     }
 
+    //Leitura de clientes
     for (int i = 0; i < tamC; i++)
     {
         int temp;
@@ -42,6 +46,7 @@ int main(int argc, char *argv[])
         SetTipo(total[temp], 'C');
     }
 
+    //Leitura de monitores
     for (int i = 0; i < tamM; i++)
     {
         int temp;
@@ -50,6 +55,7 @@ int main(int argc, char *argv[])
         SetTipo(total[temp], 'M');
     }
 
+    //Leitura de arestas
     for (int i = 0; i < tamE; i++)
     {
         int orig, dest;
@@ -58,7 +64,7 @@ int main(int argc, char *argv[])
         ConectaVertice(total[orig], total[dest], dist);
     }
 
-    // Processamento
+    //***************** Processamento
     for (int i = 0; i < tamS; i++)
     {
         CalculaSaidaServ(servidores[i], total, tamV);
@@ -74,22 +80,10 @@ int main(int argc, char *argv[])
         CalculaDistsCli_Serv(clientes[i], servidores, tamS, monitores, tamM, total, tamV);
     }
 
-    // printf("%i - %i\n", GetID(GetVerticeMon(monitores[0])), GetID(GetVerticeServ(servidores[0])));
-    // ImprimeTabela(getTabela_MonServ(monitores[0]));
-    // ImprimeTabela(getTabela_MonCli(monitores[0]));
-
-    // printf("\n%i - %i\n", GetID(GetVerticeMon(monitores[1])), GetID(GetVerticeServ(servidores[0])));
-    // ImprimeTabela(getTabela_MonServ(monitores[1]));
-    // ImprimeTabela(getTabela_MonCli(monitores[1]));
-
-    // printf("\n%i - %i\n", GetID(GetVerticeCli(clientes[0])), GetID(GetVerticeServ(servidores[0])));
-    // ImprimeTabela(getTabela_RTTReal(clientes[0]));
-    // printf("oi\n");
-    // ImprimeTabela(getTabela_RTTFake(clientes[0]));
-
+    //***************** Saida
     ImprimeSaida(clientes, tamC, servidores, tamS);
 
-    // Liberando a memoria alocada
+    //***************** Liberando a
     for (int i = 0; i < tamC; i++)
     {
         LiberaCliente(clientes[i]);

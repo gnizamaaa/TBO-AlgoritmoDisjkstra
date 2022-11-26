@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// TODO: MUDAR PARA UMA LINKEDLIST - Economizar memoria
+// (nao sei qual sera o maior caso)
+
 typedef struct celula Celula;
 
 struct celula

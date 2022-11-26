@@ -32,6 +32,15 @@ double DistIda(Servidor *ser, Vertice *dest)
     return GetDist(ser->DistIda, dest);
 }
 
+/**
+ * @brief Atualiza a Priority Queue com os valores (possivelmente menores)
+ * de custo obtidos através dos vertices adjacentes ao retirado da fila
+ *
+ * @param vert - Vertice adjacente 
+ * @param custo - Custo do vertice retirado para o adjacente
+ * @param fila - PQ
+ * @param custoVertAtual - Custo da origem ao vertice retirado
+ */
 static void Atualizafila(Vertice *vert, double custo, PQ *fila, double custoVertAtual)
 {
     if (PQ_get_key(fila, GetID(vert)) > custo + custoVertAtual)

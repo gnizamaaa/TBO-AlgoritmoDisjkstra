@@ -14,7 +14,7 @@ Vertice *PQ_delmin(PQ *base); // Remove Item com menor campo 'value' da PQ
 
 void PQ_decrease_key(PQ *base, int id, double value); // Muda a prioridade do nó com identificador 'id' para 'value'
 
-double PQ_get_key(PQ *base, int id); //
+double PQ_get_key(PQ *base, int id); // Retorna a prioridade/key dado um ID de value
 
 Vertice *PQ_min(PQ *base); // Retorna Item com menor campo 'value' da PQ
 

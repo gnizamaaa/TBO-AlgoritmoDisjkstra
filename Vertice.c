@@ -2,6 +2,7 @@
 #include "ListaVertice.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct vertice
 {
@@ -35,14 +36,19 @@ void SetTipo(Vertice *v, char tipo)
 
 int IsCli(Vertice *v)
 {
+    assert(v);
     return v->tipo == 'C';
 }
+
 int IsServ(Vertice *v)
 {
+    assert(v);
     return v->tipo == 'S';
 }
+
 int IsMon(Vertice *v)
 {
+    assert(v);
     return v->tipo == 'M';
 }
 

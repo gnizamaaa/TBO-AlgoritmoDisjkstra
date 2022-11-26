@@ -7,6 +7,13 @@ typedef struct
     double relacao;
 } Cel;
 
+/**
+ * @brief Funcao de comparacao de duas celulas com base apenas na distancia
+ * 
+ * @param e1 
+ * @param e2 
+ * @return int 
+ */
 static int CmpCel(const void *e1, const void *e2)
 {
     const Cel *c1 = e1, *c2 = e2;
@@ -18,6 +25,7 @@ static int CmpCel(const void *e1, const void *e2)
         return -1;
 }
 
+//TODO: Imprimir para arquivo!
 void ImprimeSaida(Cliente **vetCli, int qntCli, Servidor **vetSer, int qntSer)
 {
     Cel *vetorzao = malloc(sizeof(Cel) * (qntCli * qntSer));

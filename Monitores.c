@@ -27,13 +27,20 @@ Vertice *GetVerticeMon(Monitor *mon)
     return mon->vert;
 }
 
-// Insere o vertice pego com o getVertice do obj a ser inserido
 void InsereArestaMon(Monitor *alvo, Vertice *vertIns, double dist)
 {
-    // insereListaVertice(, vertIns, dist);
     ConectaVertice(alvo->vert, vertIns, dist);
 }
 
+/**
+ * @brief Atualiza a Priority Queue com os valores (possivelmente menores)
+ * de custo obtidos através dos vertices adjacentes ao retirado da fila
+ * 
+ * @param vert 
+ * @param custo 
+ * @param fila 
+ * @param custoVertAtual 
+ */
 static void Atualizafila(Vertice *vert, double custo, PQ *fila, double custoVertAtual)
 {
     if (PQ_get_key(fila, GetID(vert)) > custo + custoVertAtual)
@@ -80,11 +87,6 @@ void CalculaDistsMon_Serv(Monitor *mon, Servidor **vetServ, int qtdServ, Vertice
         }
     }
     PQ_finish(fila);
-
-    // printf("\nMonitor - Serv\n");
-    // ImprimeTabela(mon->RTTServ);
-    // printf("\nMonitor - Cli\n");
-    // ImprimeTabela(mon->SaidaCli);
 }
 
 // Busca na tabela
