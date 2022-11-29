@@ -2,9 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// TODO: MUDAR PARA UMA LINKEDLIST - Economizar memoria
-// (nao sei qual sera o maior caso)
-
 typedef struct celula Celula;
 
 struct celula
@@ -14,6 +11,13 @@ struct celula
     Celula *prox;
 };
 
+/**
+ * @brief Comparador de celulas
+ * 
+ * @param p1 
+ * @param p2 
+ * @return int 
+ */
 int CompareCel(const void *p1, const void *p2)
 {
     const Celula *c1 = p1;
