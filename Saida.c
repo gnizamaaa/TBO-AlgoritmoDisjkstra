@@ -26,7 +26,7 @@ static int CmpCel(const void *e1, const void *e2)
 }
 
 //TODO: Imprimir para arquivo!
-void ImprimeSaida(Cliente **vetCli, int qntCli, Servidor **vetSer, int qntSer)
+void ImprimeSaida(FILE *arqSai, Cliente **vetCli, int qntCli, Servidor **vetSer, int qntSer)
 {
     Cel *vetorzao = malloc(sizeof(Cel) * (qntCli * qntSer));
     int count = 0;
@@ -46,7 +46,7 @@ void ImprimeSaida(Cliente **vetCli, int qntCli, Servidor **vetSer, int qntSer)
 
     for (int i = 0; i < count; i++)
     {
-        printf("%i %i %.16f\n", vetorzao[i].IDSer, vetorzao[i].IDCli, vetorzao[i].relacao);
+        fprintf(arqSai,"%i %i %.16f\n", vetorzao[i].IDSer, vetorzao[i].IDCli, vetorzao[i].relacao);
     }
 
     free(vetorzao);

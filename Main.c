@@ -12,7 +12,6 @@ int main(int argc, char *argv[])
     FILE *arqEnt = fopen(entrada, "r");
     int tamV, tamE, tamS, tamC, tamM;
 
-
     //***************** Leitura do arquivo de entrada
 
     fscanf(arqEnt, "%i %i", &tamV, &tamE);
@@ -28,7 +27,7 @@ int main(int argc, char *argv[])
     Cliente **clientes = malloc(sizeof(Cliente *) * tamC);
     Monitor **monitores = malloc(sizeof(Monitor *) * tamM);
 
-    //Leitura de servidores
+    // Leitura de servidores
     for (int i = 0; i < tamS; i++)
     {
         int temp;
@@ -37,7 +36,7 @@ int main(int argc, char *argv[])
         SetTipo(total[temp], 'S');
     }
 
-    //Leitura de clientes
+    // Leitura de clientes
     for (int i = 0; i < tamC; i++)
     {
         int temp;
@@ -46,7 +45,7 @@ int main(int argc, char *argv[])
         SetTipo(total[temp], 'C');
     }
 
-    //Leitura de monitores
+    // Leitura de monitores
     for (int i = 0; i < tamM; i++)
     {
         int temp;
@@ -55,7 +54,7 @@ int main(int argc, char *argv[])
         SetTipo(total[temp], 'M');
     }
 
-    //Leitura de arestas
+    // Leitura de arestas
     for (int i = 0; i < tamE; i++)
     {
         int orig, dest;
@@ -81,7 +80,9 @@ int main(int argc, char *argv[])
     }
 
     //***************** Saida
-    ImprimeSaida(clientes, tamC, servidores, tamS);
+    FILE *arqSai = fopen(saida, "w");
+    ImprimeSaida(arqSai,clientes, tamC, servidores, tamS);
+    fclose(arqSai);
 
     //***************** Liberando a
     for (int i = 0; i < tamC; i++)
