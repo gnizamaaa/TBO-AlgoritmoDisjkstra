@@ -6,8 +6,8 @@
 
 int main(int argc, char *argv[])
 {
-    char *entrada = "entrada.txt";
-    char *saida = "teste.txt";
+    char *entrada = argv[1];
+    char *saida = argv[2];
 
     FILE *arqEnt = fopen(entrada, "r");
     int tamV, tamE, tamS, tamC, tamM;
