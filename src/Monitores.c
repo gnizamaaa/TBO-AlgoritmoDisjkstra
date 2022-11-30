@@ -3,6 +3,7 @@
 #include "ListaVertice.h"
 #include "Monitores.h"
 #include "PQ.h"
+#include <assert.h>
 
 struct monitor
 {
@@ -35,11 +36,11 @@ void InsereArestaMon(Monitor *alvo, Vertice *vertIns, double dist)
 /**
  * @brief Atualiza a Priority Queue com os valores (possivelmente menores)
  * de custo obtidos através dos vertices adjacentes ao retirado da fila
- * 
- * @param vert 
- * @param custo 
- * @param fila 
- * @param custoVertAtual 
+ *
+ * @param vert
+ * @param custo
+ * @param fila
+ * @param custoVertAtual
  */
 static void Atualizafila(Vertice *vert, double custo, PQ *fila, double custoVertAtual)
 {

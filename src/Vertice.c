@@ -16,6 +16,7 @@ Vertice *IniciaVertice(int ID, int tamMapa)
     Vertice *saida = malloc(sizeof(Vertice));
     saida->id = ID;
     saida->saidas = inicializaListaVertice(tamMapa);
+    saida->tipo='\0';
     return saida;
 }
 

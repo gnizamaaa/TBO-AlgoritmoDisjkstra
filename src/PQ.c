@@ -47,8 +47,8 @@ void fix_down(PQ *base, Item *a, int sz, int k)
 PQ *PQ_init(int maxN)
 {
     PQ *saida = malloc(sizeof(PQ));
-    saida->vet = (Item *)malloc((maxN + 1) * sizeof(Item));
-    saida->map = (int *)malloc((maxN + 1) * sizeof(int));
+    saida->vet = (Item *)malloc((maxN+2) * sizeof(Item));
+    saida->map = (int *)malloc((maxN+2) * sizeof(int));
     saida->N = 0;
     return saida;
 }
@@ -64,13 +64,18 @@ void PQ_insert(PQ *base, Vertice *vert, double dist)
 
 Vertice *PQ_delmin(PQ *base)
 {
-    Item min = base->vet[1];
+    if (base->N > 0)
+    {
+        Item min = base->vet[1];
 
-    swap(base, 1, base->N);
-    base->N--;
-    fix_down(base, base->vet, base->N, 1);
+        swap(base, 1, base->N);
+        base->N--;
+        fix_down(base, base->vet, base->N, 1);
 
-    return min.vert;
+        return min.vert;
+    }
+    else
+        return NULL;
 }
 
 Vertice *PQ_min(PQ *base)
